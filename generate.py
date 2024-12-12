@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 def get_heading(day, year):
-    # https://adventofcode.com/2024/day/9
+
     url = "https://adventofcode.com/{year}/day/{day}"
 
     r = requests.get(url.format(year=year, day=day))
@@ -30,8 +30,11 @@ def generate_file_name(day, year, heading: str):
 
 def create_files(py_name, txt_name):
     base_dir = os.path.dirname(sys.argv[0])
-    data_path = "/datas/"
 
+    # incase if generate.py is not run with absolute path.
+    # base_dir value will be empty
+    base_dir = "." if not base_dir else base_dir
+    data_path = "/datas/"
     with open(base_dir + "/" + py_name, "w"):
         ...
 
@@ -43,8 +46,7 @@ def main(args):
 
     day = args.day
     year = args.year
-    # heading = get_heading(day, year)
-    heading = "Guard Gallivant"
+    heading = get_heading(day, year)
     py_name, txt_name = generate_file_name(day, year, heading)
     create_files(py_name, txt_name)
 
