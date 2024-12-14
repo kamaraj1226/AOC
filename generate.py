@@ -24,21 +24,27 @@ def generate_file_name(day, year, heading: str):
     base_file_name = day + month + year + "_" + "_".join(heading.split())
     python_name = base_file_name + ".py"
     txt_name = base_file_name + ".txt"
+    test_txt_name = base_file_name + "_test.txt"
 
-    return python_name, txt_name
+    return python_name, txt_name, test_txt_name
 
 
-def create_files(py_name, txt_name):
+def create_files(py_name, txt_name, test_txt_name):
     base_dir = os.path.dirname(sys.argv[0])
 
     # incase if generate.py is not run with absolute path.
     # base_dir value will be empty
     base_dir = "." if not base_dir else base_dir
     data_path = "/datas/"
-    with open(base_dir + "/" + py_name, "w"):
-        ...
+    with open(base_dir + "/src/" + py_name, "w") as f:
+
+        with open(base_dir + "/template.py") as template_file:
+            f.write(template_file.read())
 
     with open(base_dir + data_path + txt_name, "w"):
+        ...
+
+    with open(base_dir + data_path + test_txt_name, "w"):
         ...
 
 
@@ -47,8 +53,8 @@ def main(args):
     day = args.day
     year = args.year
     heading = get_heading(day, year)
-    py_name, txt_name = generate_file_name(day, year, heading)
-    create_files(py_name, txt_name)
+    py_name, txt_name, test_txt_name = generate_file_name(day, year, heading)
+    create_files(py_name, txt_name, test_txt_name)
 
 
 if __name__ == "__main__":
